@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku
 {
-    interface IConsoleInputOutput
+    interface IPrintable
     {
         string InputSudokuBoard();
         void OutputSudokuBoard(string boardToPrint);

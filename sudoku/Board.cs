@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku
 {
-    class Board
+    public class Board
     {
         // matrix that representing the sudoku board
         private int[,] boardMatrix;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku
 {
-    class SudokuBoardSolver
+    public static class SudokuBoardSolver
     {
         public static int[] BitsSetTable256;
         static SudokuBoardSolver()
