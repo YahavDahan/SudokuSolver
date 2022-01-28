@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace sudoku
+namespace sudoku.Logic
 {
     public static class SudokuBoardSolver
     {
@@ -70,7 +70,7 @@ namespace sudoku
                         if (theNumberOfLegalOptionsOfTheCurrentCell < theMinimumNumberOfLegalOptions)
                         {
                             theMinimumNumberOfLegalOptions = theNumberOfLegalOptionsOfTheCurrentCell;
-                            locationOfTheCellWithTheMinimumNumberOfLegalOptions = row * board.getSize() + col;
+                            locationOfTheCellWithTheMinimumNumberOfLegalOptions = row * board.GetSize() + col;
                         }
                     }
                 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace sudoku
+namespace sudoku.Input_and_Output
 {
-    interface IPrintable
+    interface IReadable
     {
         string InputSudokuBoard();
-        void OutputSudokuBoard(string boardToPrint);
     }
 }
