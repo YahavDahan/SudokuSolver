@@ -1,0 +1,5 @@
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.csproj.AssemblyReference.cache
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.AssemblyInfoInputs.cache
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.AssemblyInfo.cs
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.csproj.CoreCompileInputs.cache
