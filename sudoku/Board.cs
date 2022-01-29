@@ -33,7 +33,7 @@ namespace sudoku
             this.size = (int)(Math.Sqrt(strBoard.Length));
             this.subSize = (int)(Math.Sqrt(this.size));
             if (!AreAllTheCharactersAsciiCodeValid(strBoard))
-                throw new AsciiCharacterOutOfRangeException(String.Format("One of the characters is invalid to create a {0}X{0} board", this.size));
+                throw new Exceptions.AsciiCharacterOutOfRangeException(String.Format("One of the characters is invalid to create a {0}X{0} board", this.size));
             this.boardMatrix = new int[this.size, this.size];
             this.rowsArr = new ulong[this.size];
             this.colsArr = new ulong[this.size];
@@ -42,10 +42,10 @@ namespace sudoku
             {
                 for (int j = 0; j < this.size; j++)
                 {
-                    int numberToSave = HandleString.ConvertCharToIntegerTypeAsNumber(strBoard[i * this.size + j]);
-                    ulong maskOfTheNumber = Board.createMaskForNumber(numberToSave);
+                    int numberToSave = Logic.HandleString.ConvertCharToIntegerTypeAsNumber(strBoard[i * this.size + j]);
+                    ulong maskOfTheNumber = Board.CreateMaskFromNumber(numberToSave);
                     if (numberToSave != 0 && !IsNumberValidInThisLocation(maskOfTheNumber, i, j))
-                            throw new NumberLocationException(String.Format("The character in location {0} in the string is invalid in this location", (i * this.size + j)));
+                            throw new Exceptions.NumberLocationException(String.Format("The character in location {0} in the string is invalid in this location", (i * this.size + j)));
                     UpdateValue(numberToSave, maskOfTheNumber, i, j);
                 }
             }
@@ -79,12 +79,12 @@ namespace sudoku
             return true;
         }
 
-        public static ulong createMaskForNumber(int numberForCreatingMask)
+        public static ulong CreateMaskFromNumber(int numberForCreatingMask)
         {
             if (numberForCreatingMask == 0)
                 return 0;
             ulong mask = 1;
-            mask = mask << (numberForCreatingMask - 1);
+            mask <<= (numberForCreatingMask - 1);
             return mask;
         }
 
@@ -99,7 +99,7 @@ namespace sudoku
         public void RemoveValue(ulong maskOfTheValueToRemove, int row, int col)
         {
             this.boardMatrix[row, col] = 0;
-            maskOfTheValueToRemove = maskOfTheValueToRemove ^ (((ulong)1 << this.size) - 1);
+            maskOfTheValueToRemove ^= (((ulong)1 << this.size) - 1);
             this.rowsArr[row] &= maskOfTheValueToRemove;
             this.colsArr[col] &= maskOfTheValueToRemove;
             this.boxesArr[row - (row % this.subSize) + col / this.subSize] &= maskOfTheValueToRemove;

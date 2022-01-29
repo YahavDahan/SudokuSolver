@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace sudoku
+namespace sudoku.Logic
 {
-    class HandleString
+    public static class HandleString
     {
         public static int ConvertCharToIntegerTypeAsNumber(char tavToConvert)
         {
