@@ -48,8 +48,13 @@ namespace sudoku
                 string strBoard = inputOutputObj.InputStringBoard();
                 sudokuBoard = CreateNewBoard(strBoard);
             } while (sudokuBoard == null);
+            TimeSpan theTimeBeforeTheSolving = DateTime.Now.TimeOfDay;
             if (Logic.SudokuBoardSolver.Solver(sudokuBoard))
+            {
+                TimeSpan theTimeAfterTheSolving = DateTime.Now.TimeOfDay;
                 inputOutputObj.OutputSudokuBoard(sudokuBoard);
+                Console.WriteLine(String.Format("The time it took to solve the sudoku board:  {0} \n\n", theTimeAfterTheSolving - theTimeBeforeTheSolving));
+            }
             else
                 Console.WriteLine("The inserted board is unsolvable \n\n");
         }
@@ -68,11 +73,5 @@ namespace sudoku
 // טסטים
 // לחבר פרויקט לגיט
 // לבדוק שאין חזרות על קטעי קוד
-// האם לכל המחלקות הסטטיות צריך להוסיף אבסטרקט?
-// הדפסת זמן פתירה
-// inputs and outputs
 
-// האם צריך מחלקה סולבר או שהכל במחלקת לוח
-// Git
-// איפה מחלקות קלט ופלט
-// מצאתם דרכים לייעל?
+// האם יש מחרוזות בקונסול שיכולות להקריס

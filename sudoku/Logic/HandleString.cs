@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku.Logic
 {
-    class HandleString
+    public static class HandleString
     {
         public static int ConvertCharToIntegerTypeAsNumber(char tavToConvert)
         {

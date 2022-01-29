@@ -24,9 +24,9 @@ namespace sudoku.Logic
                 return true;
             int row = locationOfTheCellWithTheMinimumNumberOfLegalOptions / sudokuBoardToSolve.GetSize();
             int col = locationOfTheCellWithTheMinimumNumberOfLegalOptions % sudokuBoardToSolve.GetSize();
-            for (int i = 1; i < sudokuBoardToSolve.GetSize(); i++)
+            for (int i = 1; i < sudokuBoardToSolve.GetSize() + 1; i++)
             {
-                ulong maskOfTheNumber = Board.createMaskForNumber(i);
+                ulong maskOfTheNumber = Board.CreateMaskFromNumber(i);
                 if (sudokuBoardToSolve.IsNumberValidInThisLocation(maskOfTheNumber, row, col))
                 {
                     sudokuBoardToSolve.UpdateValue(i, maskOfTheNumber, row, col);
@@ -56,18 +56,19 @@ namespace sudoku.Logic
         public static int FindMinimumLocation(Board board)
         {  // מחזיר את מיקום המשבצת בעלת מספר ההצבות החוקיות הקטן ביותר. אם הלוח מלא יוחזר מינוס אחד.
             int theMinimumNumberOfLegalOptions = board.GetSize(), locationOfTheCellWithTheMinimumNumberOfLegalOptions = -1;
-            for (int row = 0; row < board.GetSize(); row++)
+            int row, col;
+            for (row = 0; row < board.GetSize(); row++)
             {
                 if (board.RowsArr[row] == (((ulong)1 << board.GetSize()) - 1))
                     continue;
-                for (int col = 0; col < board.GetSize(); col++)
+                for (col = 0; col < board.GetSize(); col++)
                 {
                     if (board.BoardMatrix[row, col] == 0)
                     {
                         int theNumberOfLegalOptionsOfTheCurrentCell = CountLegalNumbersInCurrentIndex(board, row, col);
                         if (theNumberOfLegalOptionsOfTheCurrentCell == 0)
                             return row * board.GetSize() + col;
-                        if (theNumberOfLegalOptionsOfTheCurrentCell < theMinimumNumberOfLegalOptions)
+                        if (theNumberOfLegalOptionsOfTheCurrentCell <= theMinimumNumberOfLegalOptions)
                         {
                             theMinimumNumberOfLegalOptions = theNumberOfLegalOptionsOfTheCurrentCell;
                             locationOfTheCellWithTheMinimumNumberOfLegalOptions = row * board.GetSize() + col;

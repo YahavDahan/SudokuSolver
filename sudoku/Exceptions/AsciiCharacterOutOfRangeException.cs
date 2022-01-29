@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku.Exceptions
 {
-    class AsciiCharacterOutOfRangeException : Exception
+    public class AsciiCharacterOutOfRangeException : Exception
     {
         public AsciiCharacterOutOfRangeException(string message)
         : base(message) { }

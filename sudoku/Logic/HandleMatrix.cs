@@ -4,7 +4,7 @@ using System.Text;
 
 namespace sudoku.Logic
 {
-    class HandleMatrix
+    public static class HandleMatrix
     {
         public static int[,] StringToIntegerSquareMatrix(string stringToConvert, int numOfRows)
         {

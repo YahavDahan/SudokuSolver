@@ -3,3 +3,12 @@ C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcorea
 C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.AssemblyInfoInputs.cache
 C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.AssemblyInfo.cs
 C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.csproj.CoreCompileInputs.cache
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.exe
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.deps.json
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.runtimeconfig.json
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.runtimeconfig.dev.json
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.dll
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\bin\Debug\netcoreapp3.1\sudoku.pdb
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.dll
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.pdb
+C:\Users\yahav\OneDrive\שולחן העבודה\sudoku\sudoku\obj\Debug\netcoreapp3.1\sudoku.genruntimeconfig.cache
