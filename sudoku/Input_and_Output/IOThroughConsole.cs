@@ -17,12 +17,20 @@ namespace sudoku.Input_and_Output
 
         public void OutputSudokuBoard(Board boardToPrint)
         {
+            for (int j = 0; j < boardToPrint.GetSize(); j++)
+                Console.Write("_____");
+            Console.WriteLine();
             for (int i = 0; i < boardToPrint.GetSize(); i++)
             {
+                Console.Write('|');
                 for (int j = 0; j < boardToPrint.GetSize(); j++)
-                    Console.Write(boardToPrint.BoardMatrix[i, j]);
+                    Console.Write(String.Format(" {0,2} |", boardToPrint.BoardMatrix[i, j]));
+                Console.Write("\n|");
+                for (int j = 0; j < boardToPrint.GetSize(); j++)
+                    Console.Write("____|");
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
     }
 }
