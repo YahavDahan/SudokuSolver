@@ -19,6 +19,11 @@ namespace sudoku
 
         public static bool Solver(Board sudokuBoardToSolve)
         {
+            return BacktrackingSolver(sudokuBoardToSolve);
+        }
+
+        public static bool BacktrackingSolver(Board sudokuBoardToSolve)
+        {
             int locationOfTheCellWithTheMinimumNumberOfLegalOptions = FindMinimumLocation(sudokuBoardToSolve);
             if (locationOfTheCellWithTheMinimumNumberOfLegalOptions == -1)
                 return true;
@@ -30,7 +35,7 @@ namespace sudoku
                 if (sudokuBoardToSolve.IsNumberValidInThisLocation(maskOfTheNumber, row, col))
                 {
                     sudokuBoardToSolve.UpdateValue(i, maskOfTheNumber, row, col);
-                    if (Solver(sudokuBoardToSolve))
+                    if (BacktrackingSolver(sudokuBoardToSolve))
                         return true;
                     sudokuBoardToSolve.RemoveValue(maskOfTheNumber, row, col);
                 }
@@ -70,7 +75,7 @@ namespace sudoku
                         if (theNumberOfLegalOptionsOfTheCurrentCell < theMinimumNumberOfLegalOptions)
                         {
                             theMinimumNumberOfLegalOptions = theNumberOfLegalOptionsOfTheCurrentCell;
-                            locationOfTheCellWithTheMinimumNumberOfLegalOptions = row * board.getSize() + col;
+                            locationOfTheCellWithTheMinimumNumberOfLegalOptions = row * board.GetSize() + col;
                         }
                     }
                 }
