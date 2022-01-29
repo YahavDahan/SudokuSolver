@@ -17,7 +17,7 @@ namespace sudoku.Input_and_Output
 
         public void OutputSudokuBoard(Board boardToPrint)
         {
-            for (int j = 0; j < boardToPrint.GetSize(); j++)
+            for (int i = 0; i < boardToPrint.GetSize(); i++)
                 Console.Write("_____");
             Console.WriteLine();
             for (int i = 0; i < boardToPrint.GetSize(); i++)

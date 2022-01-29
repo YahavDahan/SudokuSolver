@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -37,9 +38,15 @@ namespace sudoku.Input_and_Output
             return filePath;
         }
 
-        public void OutputSudokuBoard(Board boardToPrint)
+        public async void OutputSudokuBoard(Board boardToPrint)
         {
-
+            string guarnteedWritePath = System.Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string filePath = Path.Combine(guarnteedWritePath, "solution.txt");
+            string strBoard = "";
+            for (int i = 0; i < boardToPrint.GetSize(); i++)
+                for (int j = 0; j < boardToPrint.GetSize(); j++)
+                    strBoard = strBoard + "  " + boardToPrint.BoardMatrix[i, j];
+            await File.WriteAllTextAsync(filePath, strBoard);
         }
     }
 }
