@@ -13,8 +13,9 @@ namespace sudoku.Logic
                 HumanTechniques.SolveWithHumanTechniques(sudokuBoardToSolve);
                 return BacktrackingSolver(sudokuBoardToSolve);
             }
-            catch  // ******************************************************************
+            catch (Exceptions.UnsolvableBoardException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -28,7 +29,7 @@ namespace sudoku.Logic
             int col = locationOfTheCellWithTheMinimumNumberOfLegalOptions % sudokuBoardToSolve.GetSize();
             for (int i = 1; i < sudokuBoardToSolve.GetSize() + 1; i++)
             {
-                ulong maskOfTheNumber = Board.CreateMaskFromNumber(i);
+                ulong maskOfTheNumber = HandleBitwise.CreateMaskFromNumber(i);
                 if (sudokuBoardToSolve.IsNumberValidInThisLocation(maskOfTheNumber, row, col))
                 {
                     sudokuBoardToSolve.UpdateValue(i, maskOfTheNumber, row, col);
@@ -42,7 +43,7 @@ namespace sudoku.Logic
 
         public static int CountLegalNumbersInCurrentIndex(Board board, int row, int col)
         {
-            ulong theValidNumbersInTheCurrentIndex = HandleBitwise.CheckPossibleNumbersInCurrentIndex(board, row, col);
+            ulong theValidNumbersInTheCurrentIndex = HumanTechniques.CheckPossibleNumbersInCurrentIndex(board, row, col);
             //ulong theValidNumbersInTheCurrentIndex = (board.RowsArr[row] ^ (((ulong)1 << board.GetSize()) - 1)) & 
             //    (board.ColsArr[col] ^ (((ulong)1 << board.GetSize()) - 1)) & 
             //    (board.BoxesArr[row] ^ (((ulong)1 << board.GetSize()) - 1));

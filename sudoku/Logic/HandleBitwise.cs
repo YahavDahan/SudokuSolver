@@ -22,12 +22,16 @@ namespace sudoku.Logic
 			return (number != 0) && ((number & (number - 1)) == 0);
 		}
 
-		public static ulong CheckPossibleNumbersInCurrentIndex(Board board, int row, int col)
-		{
-			return (board.RowsArr[row] | board.ColsArr[col] | board.BoxesArr[row - (row % board.GetSubSize()) + col / board.GetSubSize()]) ^ (((ulong)1 << board.GetSize()) - 1);
-		}
+        public static ulong CreateMaskFromNumber(int numberForCreatingMask)
+        {
+            if (numberForCreatingMask == 0)
+                return 0;
+            ulong mask = 1;
+            mask <<= (numberForCreatingMask - 1);
+            return mask;
+        }
 
-		public static int CreateNumberFromMask(ulong maskForCreatingNumber)
+        public static int CreateNumberFromMask(ulong maskForCreatingNumber)
 		{
 			return Log2ToNumber(maskForCreatingNumber) + 1;
 		}

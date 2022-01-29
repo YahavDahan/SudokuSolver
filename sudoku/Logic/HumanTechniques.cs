@@ -90,20 +90,30 @@ namespace sudoku.Logic
 		public static bool HiddenSinglesTechnique(Board board)
 		{  // מחזיר אמת אם התרחשו שינויים בלוח. אחרת מחזיר שקר. מחזיר שגיאה אם הלוח לא פתיר
 			bool hasChanged = false;
-			for (int i = 0; i < board.GetSize(); i++)
-				for (int j = 0; j < board.GetSize(); j++)
-					if (board.BoardMatrix[i, j] == 0)
+			for (int row = 0; row < board.GetSize(); row++)
+				for (int col = 0; col < board.GetSize(); col++)
+					if (board.BoardMatrix[row, col] == 0)
 					{
-						ulong possibleNumbers = HandleBitwise.CheckPossibleNumbersInCurrentIndex(board, i, j);
+						ulong possibleNumbers = CheckPossibleNumbersInCurrentIndex(board, row, col);
 						if (possibleNumbers == 0)
-							throw;
+							throw new Exceptions.UnsolvableBoardException(String.Format("No value can match the cell at location [{0}, {1}]", row, col));
 						if (HandleBitwise.IsPowerOfTwo(possibleNumbers))
 						{
-							board.UpdateValue(HandleBitwise.CreateNumberFromMask(possibleNumbers), possibleNumbers, i, j);
+							board.UpdateValue(HandleBitwise.CreateNumberFromMask(possibleNumbers), possibleNumbers, row, col);
 							hasChanged = true;
 						}
 					}
 			return hasChanged;
 		}
+
+		public static ulong CheckPossibleNumbersInCurrentIndex(Board board, int row, int col)
+		{
+			return (board.RowsArr[row] | board.ColsArr[col] | board.BoxesArr[row - (row % board.GetSubSize()) + col / board.GetSubSize()]) ^ (((ulong)1 << board.GetSize()) - 1);
+		}
+
+		public static bool NakedSinglesTechnique(Board board)
+        {
+			return false;
+        }
 	}
 }

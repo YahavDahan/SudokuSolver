@@ -28,11 +28,11 @@ namespace sudoku
         {
             // if the sqrt of the string length is bigger then 64 (the number of bits in ulong type)
             // or the string's length is invalid
-            if (!Board.IsValidLengthToCreateSudokuBoard(strBoard))
+            if (!Logic.HandleString.IsValidLengthToCreateSudokuBoard(strBoard))
                 throw new System.ArgumentOutOfRangeException("The string length is incorrect for creating a sudoku board");
             this.size = (int)(Math.Sqrt(strBoard.Length));
             this.subSize = (int)(Math.Sqrt(this.size));
-            if (!AreAllTheCharactersAsciiCodeValid(strBoard))
+            if (!Logic.HandleString.AreAllTheCharactersAsciiCodeValid(strBoard, this.size))
                 throw new Exceptions.AsciiCharacterOutOfRangeException(String.Format("One of the characters is invalid to create a {0}X{0} board", this.size));
             this.boardMatrix = new int[this.size, this.size];
             this.rowsArr = new ulong[this.size];
@@ -43,29 +43,12 @@ namespace sudoku
                 for (int j = 0; j < this.size; j++)
                 {
                     int numberToSave = Logic.HandleString.ConvertCharToIntegerTypeAsNumber(strBoard[i * this.size + j]);
-                    ulong maskOfTheNumber = Board.CreateMaskFromNumber(numberToSave);
+                    ulong maskOfTheNumber = Logic.HandleBitwise.CreateMaskFromNumber(numberToSave);
                     if (numberToSave != 0 && !IsNumberValidInThisLocation(maskOfTheNumber, i, j))
                             throw new Exceptions.NumberLocationException(String.Format("The character in location {0} in the string is invalid in this location", (i * this.size + j)));
                     UpdateValue(numberToSave, maskOfTheNumber, i, j);
                 }
             }
-        }
-
-        public static bool IsValidLengthToCreateSudokuBoard(string strBoard)
-        {
-            double sqrtOfStrBoardLength = Math.Sqrt(strBoard.Length);
-            if (strBoard.Length > 4096 || sqrtOfStrBoardLength - Math.Floor(sqrtOfStrBoardLength) != 0 ||
-                Math.Sqrt(sqrtOfStrBoardLength) - Math.Floor(Math.Sqrt(sqrtOfStrBoardLength)) != 0)
-                return false;
-            return true;
-        }
-
-        private bool AreAllTheCharactersAsciiCodeValid(string strBoard)
-        {
-            for (int i = 0; i < strBoard.Length; i++)
-                if (strBoard[i] < '0' || strBoard[i] > ('0' + this.size))
-                    return false;
-            return true;
         }
 
         public bool IsNumberValidInThisLocation(ulong maskOfTheNumberForChecking, int row, int col)
@@ -77,15 +60,6 @@ namespace sudoku
             if ((maskOfTheNumberForChecking & this.boxesArr[row - (row % this.subSize) + col / this.subSize]) != 0)
                 return false;
             return true;
-        }
-
-        public static ulong CreateMaskFromNumber(int numberForCreatingMask)
-        {
-            if (numberForCreatingMask == 0)
-                return 0;
-            ulong mask = 1;
-            mask <<= (numberForCreatingMask - 1);
-            return mask;
         }
 
         public void UpdateValue(int valueForUpdate, ulong maskOfTheValueForUpdate, int row, int col)
