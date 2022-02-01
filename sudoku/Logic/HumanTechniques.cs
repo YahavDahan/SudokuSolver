@@ -6,20 +6,19 @@ namespace sudoku.Logic
 {
     public static class HumanTechniques
     {
-		public static bool SolveWithHumanTechniques(Board boardToSolve)
+		public static int countChangesInTheBoard = 0;
+
+		public static int SolveWithHumanTechniques(Board boardToSolve)
         {
-			bool hasChanged = false;
+			HumanTechniques.countChangesInTheBoard = 0;
 			while (true)
             {
-				bool completionToFull = CompletionTechniqueToFull(boardToSolve);
 				bool nakedSingles = NakedSinglesTechnique(boardToSolve);
 				bool hiddenSingles = HiddenSinglesTechnique(boardToSolve);
-				if (completionToFull || hiddenSingles || nakedSingles)
-					hasChanged = true;
-				if (!(completionToFull || hiddenSingles || nakedSingles))
+				if (!(hiddenSingles || nakedSingles))
 					break;
 			}
-			return hasChanged;
+			return HumanTechniques.countChangesInTheBoard;
         }
 
 		//public static bool CompletionTechniqueToFull(Board board)
@@ -89,21 +88,21 @@ namespace sudoku.Logic
 
 		public static bool NakedSinglesTechnique(Board board)
 		{  // מחזיר אמת אם התרחשו שינויים בלוח. אחרת מחזיר שקר. מחזיר שגיאה אם הלוח לא פתיר
-			bool hasChanged = false;
+			bool hasBoardChanged = false;
 			for (int row = 0; row < board.GetSize(); row++)
 				for (int col = 0; col < board.GetSize(); col++)
 					if (board.BoardMatrix[row, col] == 0)
 					{
-						ulong possibleNumbers = CheckPossibleNumbersInCurrentIndex(board, row, col);
-						if (possibleNumbers == 0)
+						ulong maskOfThePossibleNumbers = CheckPossibleNumbersInCurrentIndex(board, row, col);
+						if (maskOfThePossibleNumbers == 0)
 							throw new Exceptions.UnsolvableBoardException(String.Format("No value can match the cell at location [{0}, {1}]", row, col));
-						if (HandleBitwise.IsPowerOfTwo(possibleNumbers))
+						if (HandleBitwise.IsPowerOfTwo(maskOfThePossibleNumbers))
 						{
-							board.UpdateValue(HandleBitwise.CreateNumberFromMask(possibleNumbers), possibleNumbers, row, col);
-							hasChanged = true;
+							AddNewValueToTheBoard(board, maskOfThePossibleNumbers, row, col);
+							hasBoardChanged = true;
 						}
 					}
-			return hasChanged;
+			return hasBoardChanged;
 		}
 
 		public static ulong CheckPossibleNumbersInCurrentIndex(Board board, int row, int col)
@@ -113,7 +112,7 @@ namespace sudoku.Logic
 
 		public static bool HiddenSinglesTechnique(Board board)
         {
-			bool hasChanged = false;
+			bool hasBoardChanged = false;
 			for (int row = 0; row < board.GetSize(); row++)
 				for (int col = 0; col < board.GetSize(); col++)
 					if (board.BoardMatrix[row, col] == 0)
@@ -121,30 +120,37 @@ namespace sudoku.Logic
 						ulong possibleNumbersOfAllTheCellsInTheCurrentBox = PossibleNumbersInCurrentBox(board, row, col);
 						ulong notPossibleNumbersOfTheCurrentCell = board.RowsArr[row] | board.ColsArr[col]
 							| board.BoxesArr[row - (row % board.GetSubSize()) + col / board.GetSubSize()];
-						ulong result = (possibleNumbersOfAllTheCellsInTheCurrentBox | notPossibleNumbersOfTheCurrentCell) ^ (((ulong)1 << board.GetSize()) - 1);
-						if (result != 0)
+						ulong maskOfThePossibleNumbers = (possibleNumbersOfAllTheCellsInTheCurrentBox | notPossibleNumbersOfTheCurrentCell) ^ (((ulong)1 << board.GetSize()) - 1);
+						if (maskOfThePossibleNumbers != 0)
 						{
-							if (HandleBitwise.IsPowerOfTwo(result))
+							if (HandleBitwise.IsPowerOfTwo(maskOfThePossibleNumbers))
 							{
-								board.UpdateValue(HandleBitwise.CreateNumberFromMask(result), result, row, col);
-								hasChanged = true;
+								AddNewValueToTheBoard(board, maskOfThePossibleNumbers, row, col);
+								hasBoardChanged = true;
 							}
 							else
 								throw new Exceptions.UnsolvableBoardException(String.Format("more then one number must appear in location [{0}, {1}]", row, col));
 						}
 					}
-			return hasChanged;
+			return hasBoardChanged;
 		}
 
 		public static ulong PossibleNumbersInCurrentBox(Board board, int row, int col)
-        {  // o(n)  לבדוק את הפונקציה ולשנות את מספר הקופסה
-			int boxNumber = 1;
+		{
+			int boxNumber = (row / board.GetSubSize() * board.GetSubSize()) + (col / board.GetSubSize());
 			ulong resultOfAllThePossibleNumbersInTheCurrentBox = 0;
 			for (int i = boxNumber / board.GetSubSize() * board.GetSubSize(); i < boxNumber / board.GetSubSize() * board.GetSubSize() + board.GetSubSize(); i++)
 				for (int j = (boxNumber % board.GetSubSize()) * board.GetSubSize(); j < (boxNumber % board.GetSubSize()) * board.GetSubSize() + board.GetSubSize(); j++)
   					if (board.BoardMatrix[i, j] == 0 && (i != row || j != col))
 						resultOfAllThePossibleNumbersInTheCurrentBox |= CheckPossibleNumbersInCurrentIndex(board, i, j);
 			return resultOfAllThePossibleNumbersInTheCurrentBox;
+		}
+
+		public static void AddNewValueToTheBoard(Board board, ulong maskOfTheNumberToBeAddedToTheBoard, int row, int col)
+        {
+			board.UpdateValue(HandleBitwise.CreateNumberFromMask(maskOfTheNumberToBeAddedToTheBoard), maskOfTheNumberToBeAddedToTheBoard, row, col);
+			SudokuBoardSolver.locationsOfBoardchangesStack.Push(row * board.GetSize() + col);
+			HumanTechniques.countChangesInTheBoard++;
 		}
 	}
 }
