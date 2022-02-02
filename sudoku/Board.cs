@@ -95,6 +95,11 @@ namespace sudoku
             set { this.boxesArr = value; }
         }
 
+        public int GetBoxNumberByRowAndColumn(int rowNumber, int columnNumber)
+        {
+            return (rowNumber / this.subSize * this.subSize) + (columnNumber / this.subSize);
+        }
+
         public int[,] BoardMatrix
         {
             get { return this.boardMatrix; }

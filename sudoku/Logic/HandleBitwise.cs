@@ -17,6 +17,18 @@ namespace sudoku.Logic
             }
         }
 
+        public static int CountOneBits(ulong number)
+        {
+            return BitsSetTable256[number & 0xff] 
+                + BitsSetTable256[(number >> 8) & 0xff]
+                + BitsSetTable256[(number >> 16) & 0xff]
+                + BitsSetTable256[(number >> 24) & 0xff]
+                + BitsSetTable256[(number >> 32) & 0xff]
+                + BitsSetTable256[(number >> 40) & 0xff]
+                + BitsSetTable256[(number >> 48) & 0xff]
+                + BitsSetTable256[number >> 56];
+        }
+
         public static bool IsPowerOfTwo(ulong number)
 		{
 			return (number != 0) && ((number & (number - 1)) == 0);

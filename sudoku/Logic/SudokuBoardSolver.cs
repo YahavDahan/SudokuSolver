@@ -82,17 +82,7 @@ namespace sudoku.Logic
         public static int CountLegalNumbersInCurrentIndex(Board board, int row, int col)
         {
             ulong theValidNumbersInTheCurrentIndex = HumanTechniques.CheckPossibleNumbersInCurrentIndex(board, row, col);
-            //ulong theValidNumbersInTheCurrentIndex = (board.RowsArr[row] ^ (((ulong)1 << board.GetSize()) - 1)) & 
-            //    (board.ColsArr[col] ^ (((ulong)1 << board.GetSize()) - 1)) & 
-            //    (board.BoxesArr[row] ^ (((ulong)1 << board.GetSize()) - 1));
-            return (HandleBitwise.BitsSetTable256[theValidNumbersInTheCurrentIndex & 0xff] 
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 8) & 0xff]
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 16) & 0xff]
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 24) & 0xff]
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 32) & 0xff]
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 40) & 0xff]
-                + HandleBitwise.BitsSetTable256[(theValidNumbersInTheCurrentIndex >> 48) & 0xff]
-                + HandleBitwise.BitsSetTable256[theValidNumbersInTheCurrentIndex >> 56]);
+            return HandleBitwise.CountOneBits(theValidNumbersInTheCurrentIndex);
         }
 
         public static int FindMinimumLocation(Board board)

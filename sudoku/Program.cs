@@ -4,16 +4,6 @@ namespace sudoku
 {
     class Program
     {
-        //public static string InputStringBoard(int number)
-        //{
-        //    string strBoard;
-        //    if (number == 1)
-        //        strBoard = InsertBoardThroughTextFile();
-        //    else
-        //        strBoard = InsertBoardThroughConsole();
-        //    return strBoard;
-        //}
-
         public static Board CreateNewBoard(string strBoard)
         {
             Board sudokuBoard;
@@ -29,14 +19,6 @@ namespace sudoku
             }
             return sudokuBoard;
         }
-
-        //public static void OutputSudokuBoard(Board boardForOutput, int number)
-        //{
-        //    if (number == 1)
-        //        PrintBoardThroughTextFile(boardForOutput);
-        //    else
-        //        PrintBoardThroughConsole(boardForOutput);
-        //}
 
         public static void SudokuGame()
         {
@@ -73,5 +55,5 @@ namespace sudoku
 // טסטים
 // לחבר פרויקט לגיט
 // לבדוק שאין חזרות על קטעי קוד
-
+// לטבל בקליטות של אנטר
 // האם יש מחרוזות בקונסול שיכולות להקריס

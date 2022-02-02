@@ -32,7 +32,7 @@ namespace sudoku.Input_and_Output
             {
                 theChosenNumber = int.Parse(Console.ReadLine());
             }
-            catch (System.FormatException)
+            catch (Exception e) when (e is System.FormatException || e is System.OverflowException)
             {
                 theChosenNumber = -1;
             }
